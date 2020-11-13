@@ -6,26 +6,28 @@
                 <Tag v-else-if="svStatusArray[index].running" color="success" size="large">{{svStatusArray[index].status}}</Tag>
                 <Tag v-else color="error" size="large">{{svStatusArray[index].status}}</Tag>
             </template>
-            <template slot-scope="{row, index}" slot="description">
-                <List size="small">
-                    <ListItem v-if="configs[index].WorkDir">&nbsp;at: {{configs[index].WorkDir}}</ListItem>
-                    <ListItem v-for="(value,name,index) of configs[index].Environment"
-                              v-bind:key="index">
-                        <span style="font-size: 0.5em; margin-right: 5px">{{name}}:&nbsp;</span><span
-                            style="font-size: 0.5em">{{value}}</span>
-                    </ListItem>
-                </List>
-            </template>
-            <template slot-scope="{row, index}" slot="info">
-                <List size="small">
-                    <ListItem><span style="color: #19be6b; margin-right: 5px">Restart:</span>{{configs[index].Restart === -1 ? '∞' : config.Restart }}
-                    </ListItem>
-                    <ListItem><span style="color: #2d8cf0; margin-right: 5px">Restart Timeout:</span>{{(configs[index].RestartTimeout/1000000000).toFixed(2)}}s
-                    </ListItem>
-                    <ListItem><span style="color: #ff9900; margin-right: 5px">Stop Timeout:</span>{{(configs[index].StopTimeout/1000000000).toFixed(2)}}s
-                    </ListItem>
-                </List>
-            </template>
+                <!-- Description状态-->
+<!--            <template slot-scope="{row, index}" slot="description">-->
+<!--                <List size="small">-->
+<!--                    <ListItem v-if="configs[index].WorkDir">&nbsp;at: {{configs[index].WorkDir}}</ListItem>-->
+<!--                    <ListItem v-for="(value,name,index) of configs[index].Environment"-->
+<!--                              v-bind:key="index">-->
+<!--                        <span style="font-size: 0.5em; margin-right: 5px">{{name}}:&nbsp;</span><span-->
+<!--                            style="font-size: 0.5em">{{value}}</span>-->
+<!--                    </ListItem>-->
+<!--                </List>-->
+<!--            </template>-->
+                <!-- Info状态 -->
+<!--            <template slot-scope="{row, index}" slot="info">-->
+<!--                <List size="small">-->
+<!--                    <ListItem><span style="color: #19be6b; margin-right: 5px">Restart:</span>{{configs[index].Restart === -1 ? '∞' : config.Restart }}-->
+<!--                    </ListItem>-->
+<!--                    <ListItem><span style="color: #2d8cf0; margin-right: 5px">Restart Timeout:</span>{{(configs[index].RestartTimeout/1000000000).toFixed(2)}}s-->
+<!--                    </ListItem>-->
+<!--                    <ListItem><span style="color: #ff9900; margin-right: 5px">Stop Timeout:</span>{{(configs[index].StopTimeout/1000000000).toFixed(2)}}s-->
+<!--                    </ListItem>-->
+<!--                </List>-->
+<!--            </template>-->
             <template slot-scope="{ row, index }" slot="action">
                 <Poptip confirm transfer title="确定吗?" @on-ok="start(index)">
                     <Button :disabled="svStatusArray[index].running !== false" :loading="svStatusArray[index].loading" type="primary" size="small" style="margin-right: 5px">Start
@@ -94,17 +96,17 @@
                         key: 'command',
                         align: 'center'
                     },
-                    {
-                        title: '路径及变量',
-                        slot: 'description',
-                        align: 'center'
-                    },
-                    {
-                        title: '信息',
-                        slot: 'info',
-                        align: 'center',
-                        width: 230
-                    },
+                    // {
+                    //     title: '路径及变量',
+                    //     slot: 'description',
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     title: '信息',
+                    //     slot: 'info',
+                    //     align: 'center',
+                    //     width: 230
+                    // },
                     {
                         title: '操作',
                         slot: 'action',

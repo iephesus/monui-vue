@@ -1,6 +1,9 @@
 <template>
-    <div id="app">
-        <ShowTable v-if="configs.length !== 0" :configs="configs"></ShowTable>
+    <div>
+        <h3 class="mar10">机器信息:<span class="mar10">{{machineInfo.Machine}}</span><span class="mar10">{{machineInfo.Ip}}</span></h3>
+        <div id="app">
+            <ShowTable v-if="configs.length !== 0" :configs="configs"></ShowTable>
+        </div>
     </div>
 </template>
 
@@ -15,13 +18,15 @@
         data: () => {
             return {
                 configs: [],
+                machineInfo: {},
                 base: process.env.VUE_APP_BASE,
             }
         },
         created() {
             this.getAllSv()
+            this.getMachineInfo()
         },
-        methods : {
+        methods: {
             getAllSv() {
                 const base = this.base
                 fetch(`${base}/supervisors`, {
@@ -38,6 +43,14 @@
                 }).catch(function (err) {
                     console.error(err);
                 })
+            },
+            getMachineInfo() {
+                const base = this.base
+                fetch(`${base}/info`, {
+                    method: 'get',
+                }).then(r => r.json()).then(r => {
+                    this.machineInfo = r
+                }).catch(err => console.error(err))
             }
         }
     }
@@ -51,5 +64,10 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+    }
+
+    .mar10 {
+        margin-top: 10px;
+        margin-left: 15px;
     }
 </style>
