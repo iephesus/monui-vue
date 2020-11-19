@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h3 class="mar10">机器信息:<span class="mar10">{{machineInfo.Machine}}</span><span class="mar10">{{machineInfo.Ip}}</span></h3>
+        <h3 class="mar10" v-if="machineInfo.Machine">机器信息:<span class="mar10">{{machineInfo.Machine}}</span><span
+                class="mar10">{{machineInfo.Ip}}</span></h3>
         <div id="app">
+            <Login v-if="!isLogin"></Login>
             <ShowTable v-if="configs.length !== 0" :configs="configs"></ShowTable>
         </div>
     </div>
@@ -9,10 +11,12 @@
 
 <script>
     import ShowTable from "./components/ShowTable"
+    import Login from "./components/Login";
 
     export default {
         name: 'App',
         components: {
+            Login,
             ShowTable
         },
         data: () => {
@@ -20,13 +24,24 @@
                 configs: [],
                 machineInfo: {},
                 base: process.env.VUE_APP_BASE,
+                isLogin: false
             }
         },
         created() {
-            this.getAllSv()
-            this.getMachineInfo()
+            if (sessionStorage.getItem("isLogin") === "true") {
+                this.isLogin = true
+            } else {
+                this.isLogin = false
+            }
+            this.isLoginSuccess()
         },
         methods: {
+            isLoginSuccess() {
+                if (sessionStorage.getItem("isLogin") === "true") {
+                    this.getAllSv()
+                    this.getMachineInfo()
+                }
+            },
             getAllSv() {
                 const base = this.base
                 fetch(`${base}/supervisors`, {
